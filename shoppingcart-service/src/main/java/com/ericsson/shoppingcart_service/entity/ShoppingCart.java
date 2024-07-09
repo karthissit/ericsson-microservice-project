@@ -4,7 +4,7 @@ import lombok.*;
 import javax.persistence.*;
 
 @Entity
-@Table(name="t_shopping_cart")
+//@Table(name="t_shopping_cart")
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
