@@ -10,6 +10,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -32,9 +35,16 @@ public class ShoppingCartService {
         List<ShoppingCartProducts> shoppingCartProducts;
         ShoppingCartProductsWrapper wrapper = null;
 
-        ShoppingCart[] shoppingCarts = restTemplate.getForObject(
-                SHOPPING_CART_SERVICE_URI + "/getshoppingcarts?customerId=" + customerId,
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        HttpEntity<Long> requestEntity = new HttpEntity<>(customerId, headers);
+        RestTemplate restTemplate = new RestTemplate();
+        ShoppingCart[] shoppingCarts = restTemplate.postForObject(
+                SHOPPING_CART_SERVICE_URI + "/getshoppingcarts",
+                requestEntity,
                 ShoppingCart[].class);
+
         if (shoppingCarts != null) {
             log.info("Found shopping carts for the customer {}", customerId);
             List<Long> productIds = Arrays.stream(shoppingCarts).map(
