@@ -47,9 +47,9 @@ public class ApiGatewayCOController {
         return ResponseEntity.ok(wrapper);
     }
 
-    @CacheEvict(value = "customerShoppingCartCache", key = "#customerId")
-    public void evictCustomerShoppingCartCache(Long customerId) {
-        // TODO: Evict cache for a specific customer shopping cart
-    }
+//    @CacheEvict(value = "customerShoppingCartCache", key = "#customerId")
+//    public void evictCustomerShoppingCartCache(Long customerId) {
+//        // TODO: Evict cache for a specific customer shopping cart
+//    }
 
 }

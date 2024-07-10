@@ -28,6 +28,7 @@ public class ShoppingCartController {
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     public List<ShoppingCart> getShoppingCarts(@RequestBody Long customerId) {
+        log.info("Getting shopping cart for customerId {}", customerId);
         return shoppingCartService.getShoppingCarts(customerId);
     }
 
@@ -36,6 +37,7 @@ public class ShoppingCartController {
             produces = MediaType.APPLICATION_XML_VALUE
     )
     public ShoppingCartXmlWrapper getShoppingCartForXmlRequest(@RequestBody ShoppingCartXmlRequest shoppingCartXmlRequest) {
+        log.info("Getting shopping cart for xml request {}", shoppingCartXmlRequest);
         return shoppingCartService.getShoppingCartsXmlResponse(shoppingCartXmlRequest.getCustomerId());
     }
 

@@ -21,7 +21,9 @@ public class ProductsService {
 
     public List<Product> getProducts(List<Long> ids) {
         log.info("getting all products");
-        return productRepository.findByIdIn(ids);
+        List<Product> byIdIn = productRepository.findByIdIn(ids);
+        log.info("products by ids {}",byIdIn);
+        return byIdIn;
     }
 
     public void updatePrices() {
@@ -34,5 +36,8 @@ public class ProductsService {
         }
     }
 
+    public List<Product> saveProducts(List<Product> products) {
+        return productRepository.saveAll(products);
+    }
 }
 

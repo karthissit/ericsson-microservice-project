@@ -49,6 +49,8 @@ dependencies {
 	implementation 'org.glassfish.jaxb:jaxb-runtime:2.3.1' // JAXB runtime
 	implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.12.5' // Jackson XML
 
+	testImplementation 'org.mockito:mockito-core'
+	implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml'
 }
 
 tasks.named('test') {
