@@ -1,6 +1,7 @@
 package com.ericsson.product_service.controller;
 
 
+import com.ericsson.product_service.dto.IdsRequest;
 import com.ericsson.product_service.entity.Product;
 import com.ericsson.product_service.service.ProductsService;
 import lombok.RequiredArgsConstructor;
@@ -32,9 +33,9 @@ public class ProductController {
     }
 
     @GetMapping
-    public List<Product> getProducts(@RequestParam List<Long> ids) {
-        log.info("Getting products {}", ids);
-        return productsService.getProducts(ids);
+    public List<Product> getProducts(@RequestBody IdsRequest request) {
+        log.info("Getting products {}", request.getIds());
+        return productsService.getProducts(request.getIds());
     }
 
     @PostMapping("/updateprice")

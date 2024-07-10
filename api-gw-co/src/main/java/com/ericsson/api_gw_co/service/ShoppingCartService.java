@@ -1,10 +1,7 @@
 package com.ericsson.api_gw_co.service;
 
 
-import com.ericsson.api_gw_co.service.value_object.Product;
-import com.ericsson.api_gw_co.service.value_object.ShoppingCart;
-import com.ericsson.api_gw_co.service.value_object.ShoppingCartProducts;
-import com.ericsson.api_gw_co.service.value_object.ShoppingCartProductsWrapper;
+import com.ericsson.api_gw_co.service.value_object.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,9 +47,15 @@ public class ShoppingCartService {
             List<Long> productIds = Arrays.stream(shoppingCarts).map(
                     ShoppingCart::getProductId
             ).collect(Collectors.toList());
+
+            IdsRequest idsRequest = new IdsRequest(productIds);
+
+            HttpEntity<IdsRequest> productRequestEntity = new HttpEntity<>(idsRequest, headers);
+
             String endPoint = getProductsEndPoint(productIds);
-            Product[] products = restTemplate.getForObject(
-                    endPoint, Product[].class
+
+            Product[] products = restTemplate.postForObject(
+                    endPoint, productRequestEntity, Product[].class
             );
             log.info("Found products for the cutomerid {}", Arrays.toString(products));
 
@@ -72,17 +75,7 @@ public class ShoppingCartService {
     }
 
     private String getProductsEndPoint(List<Long> productIds) {
-        StringBuilder builder = new StringBuilder(PRODUCT_SERVICE_URI);
-        builder.append("/products?")
-                .append("ids=");
-        for (int i = 0; i < productIds.size(); i++) {
-            builder.append(productIds.get(i));
-            if (i + 1 < productIds.size()) {
-                builder.append(",");
-            }
-        }
-
-        return builder.toString();
+        return PRODUCT_SERVICE_URI + "/products?";
     }
 
     public static List<ShoppingCartProducts> combineArrays(ShoppingCart[] shoppingCarts, Product[] products) {
