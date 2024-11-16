@@ -1,0 +1,25 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: api-gw-co
+  cache:
+    jcache:
+      config: encache.xml
+  cloud:
+    gateway:
+      routes:
+        - id: product-service
+          uri: lb://product-service
+          predicates:
+            - Path=/products/**
+        - id: department-service
+          uri: lb://shoppingcart-service
+          predicates:
+            - Path=/getshoppingcarts/**
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
