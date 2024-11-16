@@ -4,7 +4,7 @@ plugins {
 	id 'io.spring.dependency-management' version '1.0.1.RELEASE'
 }
 
-group = 'com.ericsson'
+group = 'com.ericss
 version = '0.0.1-SNAPSHOT'
 
 java {
